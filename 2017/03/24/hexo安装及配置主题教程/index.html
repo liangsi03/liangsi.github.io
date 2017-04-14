@@ -94,7 +94,7 @@
 <meta property="og:url" content="https://liangsi.github.io/2017/03/24/hexo安装及配置主题教程/index.html">
 <meta property="og:site_name" content="筱沫私房菜">
 <meta property="og:description" content="说明：mac上使用hexo+github搭建博客流程 环境准备1.安装Homebrew1ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 2.安装node1brew install node 检测node安装1node -v 3.安装git 4.注册">
-<meta property="og:updated_time" content="2017-03-24T10:43:51.000Z">
+<meta property="og:updated_time" content="2017-04-14T11:31:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo安装及配置主题教程">
 <meta name="twitter:description" content="说明：mac上使用hexo+github搭建博客流程 环境准备1.安装Homebrew1ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 2.安装node1brew install node 检测node安装1node -v 3.安装git 4.注册">
@@ -345,6 +345,7 @@
 <p>新建ssh-key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C  &quot;mywork@email.com&quot;</div></pre></td></tr></table></figure></p>
 <p>新ssh-key添加到ssh agent中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-add ~/.ssh/id_ras_1</div></pre></td></tr></table></figure></p>
 <p>~/.ssh/config并添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#aaa  (github 配置)</div><div class="line">Host aaa</div><div class="line">    HostName github.com</div><div class="line">    User git</div><div class="line">    IdentityFile ~/.ssh/id_rsa_1</div></pre></td></tr></table></figure></p>
+<p>然后复制下面内容到github，更新ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~~/.ssh/id_ras_1.pub</div></pre></td></tr></table></figure></p>
 <h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><p>1.初始化博客<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir 文件夹</div><div class="line">cd 文件夹</div><div class="line">hexo init liangsi03.github.io</div></pre></td></tr></table></figure></p>
 <p>2.加入版本控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd liangsi03.github.io </div><div class="line">git init</div><div class="line">git add .</div><div class="line">git commit -a -m &quot;初始化&quot;</div></pre></td></tr></table></figure></p>
 <p>3.设置主题</p>
