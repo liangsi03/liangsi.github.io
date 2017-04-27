@@ -260,6 +260,312 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/03/29/在Hexo中渲染MathJax数学公式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/29/在Hexo中渲染MathJax数学公式/" itemprop="url">
+                  在Hexo中渲染MathJax数学公式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T17:59:01+08:00">
+                2017-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/小技能/" itemprop="url" rel="index">
+                    <span itemprop="name">小技能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.为了能够在博客中编辑公式，需要更换Hexo的markdown渲染引擎，hexo-renderer-kramed引擎是在默认的渲染引擎hexo-renderer-marked的基础上修改了一些bug，两者比较接近，也比较轻量级。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm uninstall hexo-renderer-marked --save</div><div class="line">npm install hexo-renderer-pandoc --save</div></pre></td></tr></table></figure></p>
+<p>2.然后，跟换引擎后行间公式可以正确渲染了，但是这样还没有完全解决问题，行内公式的渲染还是有问题，因为hexo-renderer-kramed引擎也有语义冲突的问题。接下来到博客根目录下，找到node_modules\kramed\lib\rules\inline.js，把第11行的escape变量的值做相应的修改(注意,)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//  escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/,</div><div class="line">  escape: /^\\([`*\[\]()#$+\-.!_&gt;])/,</div></pre></td></tr></table></figure></p>
+<p>3.这一步是在原基础上取消了对\,{,}的转义(escape)。<br>同时把第20行的em变量也要做相应的修改(同样注意,)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</div><div class="line">  em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</div></pre></td></tr></table></figure></p>
+<p>4.在主题中开启mathjax开关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">进入到主题目录，找到_config.yml配置问题</div><div class="line"># MathJax Support</div><div class="line">mathjax:</div><div class="line">  enable: true</div><div class="line">  per_page: true</div></pre></td></tr></table></figure></p>
+<p>5.最后需要在文章的Front-matter里打开mathjax开关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">title: index.html</div><div class="line">date: 2016-12-28 21:01:30</div><div class="line">tags:</div><div class="line">mathjax: true</div><div class="line">--</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="http://www.jianshu.com/p/7ab21c7f0674" target="_blank" rel="external">http://www.jianshu.com/p/7ab21c7f0674</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/03/29/java正则用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/29/java正则用法/" itemprop="url">
+                  java正则用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T17:30:18+08:00">
+                2017-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.Java 正则表达式, 存在于 java.util.regex 包中,<br>  是到 JDK 1.4 才引入的, 仅包含上面两个类, 和一个异常类.</p>
+<ul>
+<li>Pattern (模式类) 正则表达式的编译形式, 用来表达和陈述所要搜索模式的对象.</li>
+<li>Matcher (匹配器类) 通过解释正则模式, 在字符串上执行模式匹配的引擎, 是真正影响搜索的对象.</li>
+</ul>
+<p>2.Pattern</p>
+<ul>
+<li>生成 Pattern 对象</li>
+<li>生成 Pattern 对象只有一种方法, 就是调用其静态方法 compile.</li>
+</ul>
+<p>3.Java 正则表达式<br>预定义字符集</p>
+<ul>
+<li>\p{Lower}=[a-z]</li>
+<li>\p{Upper}=[A-Z]</li>
+<li>\p{ASCII}=[\x00-\x7F]</li>
+<li>\p{Alpha}=[{Lower}\p{Upper}]</li>
+<li>\p{Digit}=[0-9]</li>
+<li>\p{Alnum}=[\p{Alpha}\p{Digit}]</li>
+<li>\p{Punct}=[!”#$%&amp;’()*+,-./:;&lt;=&gt;?@[]^_{|}~]`</li>
+<li>\p{Graph}=[\p{Alnum}\p{Punct}]</li>
+<li>\p{Print}=[\p{Graph}\x20]</li>
+<li>\p{Blank}=[\t\x20]</li>
+<li>\p{Space}=[\t\n\v\f\r\x20]</li>
+<li>\p{Cntrl}=[\x00-\x1F\x7F]</li>
+<li>\p{XDigit}=[0-9a-fA-F]</li>
+<li>\p{javaLowerCase} 各种语言的小写字母, 远远比 \p{Lower} 多</li>
+<li>\p{javaUpperCase} 各种语言的大写字母, 远远比 \p{Upper} 多</li>
+<li>\p{javaWhitespace} 各种空白字符, 远远比 \p{Space} 多, 还包括中文的空白</li>
+<li>\p{P} 各种语言的标点符号, 远远比 \p{Punct} 多</li>
+<li>\p{Ps} 开始括号</li>
+<li>\p{Pe} 结束括号</li>
+<li>\p{Pi} 开始引号</li>
+<li>\p{Pf} 结束引号</li>
+<li>\p{Pc} 连接字符</li>
+<li>\p{Pd} 虚线字符</li>
+<li>\p{Po} 其他字符</li>
+<li>\p{S} 符号</li>
+<li>\p{Z} 分隔符</li>
+</ul>
+<p>4.用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private final static Pattern DELWEIGHT_PATTERN = Pattern.compile(&quot;^[\\u4e00-\\u9fa5]+[\\p&#123;Digit&#125;]+[\\p&#123;Alpha&#125;]&#123;1,2&#125;[\\u4e00-\\u9fa5]+$&quot;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (RegexUtils.hasMatch(DELWEIGHT_PATTERN, word)) </div><div class="line">&#123;</div><div class="line">	return replace_oneword(word);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">private static String replace_oneword(String word) </div><div class="line">&#123;</div><div class="line">    word = word.replaceAll(&quot;^[\\p&#123;Alpha&#125;]&#123;1&#125;&quot;, &quot;&quot;);   </div><div class="line">    return word;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>5.正则表示韩语和日语<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">韩语：public static final Pattern PATTERN_KOREAN = Pattern.compile(&quot;[\\uAC00-\\uD7AF]+&quot;);</div><div class="line">日语：public static final Pattern PATTERN_JAPANESE = Pattern.compile(&quot;[\\u3040-\\u32FF]+&quot;);</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="https://henryhyn.github.io/2017/03/07/java-regex/" target="_blank" rel="external">https://henryhyn.github.io/2017/03/07/java-regex/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/03/24/hexo安装及配置主题教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -701,7 +1007,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -719,7 +1025,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
