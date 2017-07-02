@@ -260,6 +260,128 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/图片水印识别的各种尝试/" itemprop="url">
+                  图片水印识别的各种尝试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T10:49:23+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="图片分类"><a href="#图片分类" class="headerlink" title="图片分类"></a>图片分类</h2><p>1.抽取特征<br>SIFT，SURF，HOG，颜色等等<br>然后SVM分类<br>如果没有水印的召回率特别高，可以结合搜这个结果<br>参考链接：<br>scikit Image:sklean<br><a href="http://scikit-learn.org/stable/" target="_blank" rel="external">http://scikit-learn.org/stable/</a></p>
+<h2 id="图片目标识别"><a href="#图片目标识别" class="headerlink" title="图片目标识别"></a>图片目标识别</h2><p>把水印当做目标</p>
+<h2 id="图片目标识别中比较高级的方法"><a href="#图片目标识别中比较高级的方法" class="headerlink" title="图片目标识别中比较高级的方法"></a>图片目标识别中比较高级的方法</h2><p>1.fast rcnn<br>参考链接<br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html</a><br><a href="http://blog.csdn.net/smf0504/article/details/52751251" target="_blank" rel="external">http://blog.csdn.net/smf0504/article/details/52751251</a></p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>基于SIFT特征和SVM的图像分类<br>参考链接：<br><a href="http://www.ithao123.cn/content-8721974.html" target="_blank" rel="external">http://www.ithao123.cn/content-8721974.html</a></p>
+<h2 id="其他教程"><a href="#其他教程" class="headerlink" title="其他教程"></a>其他教程</h2><p>1.定向梯度和物体检测直方图<br><a href="http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/</a><br>2.图形金字塔与Python和OpenCV<br><a href="http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/</a><br>3.使用Python和OpenCV来滑动Windows对象检测<br><a href="http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/</a><br>4.Non-Maximum Suppression for Object Detection in Python<br><a href="http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a><br>5.(Faster) Non-Maximum Suppression in Python<br><a href="http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/</a><br>6.Texture Matching using Local Binary Patterns (LBP), OpenCV, scikit-learn and Python<br><a href="http://hanzratech.in/2015/05/30/local-binary-patterns.html" target="_blank" rel="external">http://hanzratech.in/2015/05/30/local-binary-patterns.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/20/python自动重命名文件下全部图片/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1583,154 +1705,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/03/24/hexo安装及配置主题教程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liangsi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="筱沫私房菜">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/24/hexo安装及配置主题教程/" itemprop="url">
-                  hexo安装及配置主题教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-24T15:31:46+08:00">
-                2017-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>说明：mac上使用hexo+github搭建博客流程</p>
-<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>1.安装Homebrew<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure></p>
-<p>2.安装node<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure></p>
-<p>检测node安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node -v</div></pre></td></tr></table></figure></p>
-<p>3.安装git</p>
-<p>4.注册 github 账号, 并添加 SSH key</p>
-<blockquote>
-<p>一台mac上多个SSH key</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div></pre></td></tr></table></figure>
-<p>新建ssh-key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C  &quot;mywork@email.com&quot;</div></pre></td></tr></table></figure></p>
-<p>新ssh-key添加到ssh agent中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-add ~/.ssh/id_ras_1</div></pre></td></tr></table></figure></p>
-<p>~/.ssh/config并添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#aaa  (github 配置)</div><div class="line">Host aaa</div><div class="line">    HostName github.com</div><div class="line">    User git</div><div class="line">    IdentityFile ~/.ssh/id_rsa_1</div></pre></td></tr></table></figure></p>
-<p>然后复制下面内容到github，更新ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~/.ssh/id_ras_1.pub</div></pre></td></tr></table></figure></p>
-<h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><p>1.初始化博客<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir 文件夹</div><div class="line">cd 文件夹</div><div class="line">hexo init liangsi03.github.io</div></pre></td></tr></table></figure></p>
-<p>2.加入版本控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd liangsi03.github.io </div><div class="line">git init</div><div class="line">git add .</div><div class="line">git commit -a -m &quot;初始化&quot;</div></pre></td></tr></table></figure></p>
-<p>3.设置主题</p>
-<p>具体查看配置<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">链接</a></p>
-<p>4.完成安装, 并启动服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install</div><div class="line">hexo server</div></pre></td></tr></table></figure></p>
-<h2 id="发布到github"><a href="#发布到github" class="headerlink" title="发布到github"></a>发布到github</h2><blockquote>
-<p>在github上新建项目，liangsi03.github.io，需要与<strong>你的账号名相同</strong></p>
-</blockquote>
-<p>1.安装插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>2.修改hexo/_config.yml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:  </div><div class="line">	type:git </div><div class="line">	repo:git@github.com:liangsi03/liangsi03.github.io.git</div><div class="line">	branch:master</div></pre></td></tr></table></figure></p>
-<p>3.一键发布：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo deoloy</div></pre></td></tr></table></figure></p>
-<p>如果没有更新，试试这个吧</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</div></pre></td></tr></table></figure>
-<p><strong>感谢</strong></p>
-<blockquote>
-<p>感谢何老师的指导帮助，何老师牛～～～</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1780,7 +1754,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -260,6 +260,148 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/06/30/生成式对抗网络GAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/30/生成式对抗网络GAN/" itemprop="url">
+                  生成式对抗网络GAN
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T10:06:32+08:00">
+                2017-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于GAN的简介：</p>
+<h2 id="GAN原理介绍"><a href="#GAN原理介绍" class="headerlink" title="GAN原理介绍"></a>GAN原理介绍</h2><pre><code>说到GAN第一篇要看的paper当然是Ian Goodfellow大牛的Generative Adversarial Networks，这篇paper算是这个领域的开山之作。
+
+GAN的基本原理其实非常简单，这里以生成图片为例进行说明。假设我们有两个网络，G（Generator）和D（Discriminator）。正如它的名字所暗示的那样，它们的功能分别是：G是一个生成图片的网络，它接收一个随机的噪声z，通过这个噪声生成图片，记做G(z)。D是一个判别网络，判别一张图片是不是“真实的”。它的输入参数是x，x代表一张图片，输出D（x）代表x为真实图片的概率，如果为1，就代表100%是真实的图片，而输出为0，就代表不可能是真实的图片。在训练过程中，生成网络G的目标就是尽量生成真实的图片去欺骗判别网络D。而D的目标就是尽量把G生成的图片和真实的图片分别开来。这样，G和D构成了一个动态的“博弈过程”。最后博弈的结果是什么？在最理想的状态下，G可以生成足以“以假乱真”的图片G(z)。对于D来说，它难以判定G生成的图片究竟是不是真实的，因此D(G(z)) = 0.5。这样我们的目的就达成了：我们得到了一个生成式的模型G，它可以用来生成图片。
+</code></pre><p>GAN学习指南：从原理入门到制作生成Demo，总共分几步？<br>    GAN的公式由两项构成。x表示真实图片，z表示输入G网络的噪声，而G(z)表示G网络生成的图片。D(x)表示D网络判断真实图片是否真实的概率（因为x就是真实的，所以对于D来说，这个值越接近1越好）。而D(G(z))是D网络判断G生成的图片的是否真实的概率。G的目的：上面提到过，D(G(z))是D网络判断G生成的图片是否真实的概率，G应该希望自己生成的图片“越接近真实越好”。也就是说，G希望D(G(z))尽可能得大，这时V(D, G)会变小。因此我们看到式子的最前面的记号是min_G。D的目的：D的能力越强，D(x)应该越大，D(G(x))应该越小。这时V(D,G)会变大。因此式子对于D来说是求最大(max_D)</p>
+<p>那么如何用随机梯度下降法训练D和G？论文中也给出了算法：</p>
+<pre><code>这里红框圈出的部分是我们要额外注意的。第一步我们训练D，D是希望V(G, D)越大越好，所以是加上梯度(ascending)。第二步训练G时，V(G, D)越小越好，所以是减去梯度(descending)。整个训练过程交替进行。
+</code></pre><h2 id="简单爬虫"><a href="#简单爬虫" class="headerlink" title="简单爬虫"></a>简单爬虫</h2><p>import requests<br>from bs4 import BeautifulSoup<br>import os<br>import traceback</p>
+<p>def download(url,filename):<br>    if os.path.exists(filename):<br>        print(‘file exists!’)<br>        return<br>    try:<br>        r = requests.get(url,stream=True, timeout=60)<br>        r = raise_for_status()<br>        with open(filename,’wb’) as f:<br>            for chunk in r.iter_content(chunk_size=1024):<br>                if chunk:<br>                    f.write(chunk)<br>                    f.flush<br>        return filename<br>    except KeyboardInterrupt:<br>        if os.path.exists(filename):<br>            os.remove(filename)<br>        raise KeyboardInterrupt<br>    except Exception:<br>        traceback.print_exc()<br>        if os.path.exists(filename):<br>            os.remove(filename)</p>
+<p>if os.path.exists(‘imgs’) is False:<br>    os.makedirs(‘imgs’)</p>
+<p>start = 1<br>end = 8000<br>for i in range(star,end+1)<br>    url = “”%i<br>    html = requests.get(url).text<br>    soup = BeautifulSoup(html,’html.parser’)<br>    for img in soup.find<em>all(‘img’,class</em>=’preview’):<br>        target_url = ‘http:’+img[‘src’]<br>        filename = os.path.join(‘imgs’,target_url.split(‘/‘)[-1])<br>        download(target_url,filename)<br>    print(‘%d/%d’%(i,end))</p>
+<h2 id="包装网上的opencv工具nagadomi，用以截取头像"><a href="#包装网上的opencv工具nagadomi，用以截取头像" class="headerlink" title="包装网上的opencv工具nagadomi，用以截取头像"></a>包装网上的opencv工具nagadomi，用以截取头像</h2><p>import cv2<br>imoprt sys<br>import os.path<br>from glob import glob</p>
+<p>def detect(filename,cascade_file = ‘lbpcascade_animeface.xml’):<br>    if not os.path.isfile(cascade_file):<br>        raise RuntimeError(‘%s:not found’%cascade_file)</p>
+<pre><code>cascade = cv2.CascadeClassifier(cascade_file)
+image = cv2.imread(filename)
+gray = cv2.cvttColor(image,cv2.COLOR_BGR2GRAY)
+gray = cv2/equalizeHist(grat)
+
+face = cascade.detectMultiScale(gray,scaleFactor = 1.1,minNeighbors=5,minSize(48,48))
+
+for i,(x,y,w,h) in enumerate(faces):
+    face = image[y:y+h,x:x+w,:]
+    face = cv2.resize(face,(96,96))
+    save_flename = &apos;%s-%d.jpg&apos;%(os.path.basename(filenama).split(&apos;.&apos;)[0]),cv2.imwrite(&apos;faces/&apos;+save_filename,face)
+</code></pre><p>if <strong>name</strong>==’<strong>main</strong>‘<br>    if os.path.exists(‘faces’) is False:<br>        os.makedirs(‘faces’)<br>    file_list = glob(‘imgs/*.jpg’)<br>    for filename in file_list:<br>        detect(filename)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/06/09/学习使用腾讯云平台-优图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -360,7 +502,7 @@
         
           
             <h3 id="图片识别："><a href="#图片识别：" class="headerlink" title="图片识别："></a>图片识别：</h3><p>万象优图提供丰富的图片智能识别，包括<strong>图片鉴黄</strong>、<strong>图片标签</strong>、<strong>OCR识别</strong>、<strong>人脸识别</strong>等。如果以上功能无法满足您的需求，我们拥有强大的图片智能学习引擎，可以基于用户提交的数据进行识别接口定制化.</p>
-<h2 id="需要先导入APPID，secretId，secretKey"><a href="#需要先导入APPID，secretId，secretKey" class="headerlink" title="需要先导入APPID，secretId，secretKey"></a>需要先导入APPID，secretId，secretKey</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int appId = 1253855852;//      YOUR_APPID</div><div class="line">String secretId = &quot;AKIDMYUBcrClNkskMkcpVzDBxTjmcDbsZkLn&quot;;</div><div class="line">String secretKey = &quot;NXUBcmfIekZDepkOpztYy94j9JDrGPIz&quot;;</div></pre></td></tr></table></figure>
+<h2 id="需要先导入APPID，secretId，secretKey"><a href="#需要先导入APPID，secretId，secretKey" class="headerlink" title="需要先导入APPID，secretId，secretKey"></a>需要先导入APPID，secretId，secretKey</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int appId = XXXXXXXXXXXXXXXXXX;//      YOUR_APPID</div><div class="line">String secretId = &quot;XXXXXXXXXXXXXXXX&quot;;</div><div class="line">String secretKey = &quot;XXXXXXXXXXXXXXXXXX&quot;;</div></pre></td></tr></table></figure>
 <h3 id="创建ImageClient，以及指定bucket"><a href="#创建ImageClient，以及指定bucket" class="headerlink" title="创建ImageClient，以及指定bucket"></a>创建ImageClient，以及指定bucket</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// ImageClient</div><div class="line">ImageClient imageClient = new ImageClient(appId, secretId, secretKey);</div><div class="line"></div><div class="line">// 设置要操作的bucket</div><div class="line">String bucketName = &quot;testoct0609&quot;;</div></pre></td></tr></table></figure>
 <h3 id="举例-图像鉴黄"><a href="#举例-图像鉴黄" class="headerlink" title="举例-图像鉴黄"></a>举例-图像鉴黄</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 1. url方式为例</div><div class="line">String[] pornUrlList = new String[3];</div><div class="line">pornUrlList[0] = &quot;http://hearthstone.nos.netease.com/1/artworkGvG/GoblinBlastmagel.jpg&quot;;</div><div class="line">pornUrlList[1] = &quot;http://hearthstone.nos.netease.com/1/artworknaxx/Faerlinal.jpg&quot;;</div><div class="line">pornUrlList[2] = &quot;http://hearthstone.nos.netease.com/1/artworknaxx/KelThuzadl.jpg&quot;;</div><div class="line">PornDetectRequest pornReq = new PornDetectRequest(bucketName, pornUrlList);</div><div class="line">ret = imageClient.pornDetect(pornReq);</div><div class="line">System.out.println(&quot;porn detect ret:&quot; + ret);</div></pre></td></tr></table></figure>
 <h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">porn detect ret:&#123;</div><div class="line">    &quot;result_list&quot;: [</div><div class="line">        &#123;</div><div class="line">            &quot;code&quot;: 0,</div><div class="line">            &quot;message&quot;: &quot;success&quot;,</div><div class="line">            &quot;url&quot;: &quot;http://hearthstone.nos.netease.com/1/artworkGvG/GoblinBlastmagel.jpg&quot;,</div><div class="line">            &quot;data&quot;: &#123;</div><div class="line">                &quot;result&quot;: 0,</div><div class="line">                &quot;forbid_status&quot;: 0,</div><div class="line">                &quot;confidence&quot;: 0.297,</div><div class="line">                &quot;hot_score&quot;: 1.319,</div><div class="line">                &quot;normal_score&quot;: 98.681,</div><div class="line">                &quot;porn_score&quot;: 0.0</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;code&quot;: 0,</div><div class="line">            &quot;message&quot;: &quot;success&quot;,</div><div class="line">            &quot;url&quot;: &quot;http://hearthstone.nos.netease.com/1/artworknaxx/Faerlinal.jpg&quot;,</div><div class="line">            &quot;data&quot;: &#123;</div><div class="line">                &quot;result&quot;: 0,</div><div class="line">                &quot;forbid_status&quot;: 0,</div><div class="line">                &quot;confidence&quot;: 1.749,</div><div class="line">                &quot;hot_score&quot;: 7.689,</div><div class="line">                &quot;normal_score&quot;: 92.311,</div><div class="line">                &quot;porn_score&quot;: 0.0</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;code&quot;: 0,</div><div class="line">            &quot;message&quot;: &quot;success&quot;,</div><div class="line">            &quot;url&quot;: &quot;http://hearthstone.nos.netease.com/1/artworknaxx/KelThuzadl.jpg&quot;,</div><div class="line">            &quot;data&quot;: &#123;</div><div class="line">                &quot;result&quot;: 0,</div><div class="line">                &quot;forbid_status&quot;: 0,</div><div class="line">                &quot;confidence&quot;: 0.56,</div><div class="line">                &quot;hot_score&quot;: 2.48,</div><div class="line">                &quot;normal_score&quot;: 97.52,</div><div class="line">                &quot;porn_score&quot;: 0.0</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1595,128 +1737,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liangsi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="筱沫私房菜">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/26/图片水印识别的各种尝试/" itemprop="url">
-                  图片水印识别的各种尝试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T10:49:23+08:00">
-                2017-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="图片分类"><a href="#图片分类" class="headerlink" title="图片分类"></a>图片分类</h2><p>1.抽取特征<br>SIFT，SURF，HOG，颜色等等<br>然后SVM分类<br>如果没有水印的召回率特别高，可以结合搜这个结果<br>参考链接：<br>scikit Image:sklean<br><a href="http://scikit-learn.org/stable/" target="_blank" rel="external">http://scikit-learn.org/stable/</a></p>
-<h2 id="图片目标识别"><a href="#图片目标识别" class="headerlink" title="图片目标识别"></a>图片目标识别</h2><p>把水印当做目标</p>
-<h2 id="图片目标识别中比较高级的方法"><a href="#图片目标识别中比较高级的方法" class="headerlink" title="图片目标识别中比较高级的方法"></a>图片目标识别中比较高级的方法</h2><p>1.fast rcnn<br>参考链接<br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html</a><br><a href="http://blog.csdn.net/smf0504/article/details/52751251" target="_blank" rel="external">http://blog.csdn.net/smf0504/article/details/52751251</a></p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>基于SIFT特征和SVM的图像分类<br>参考链接：<br><a href="http://www.ithao123.cn/content-8721974.html" target="_blank" rel="external">http://www.ithao123.cn/content-8721974.html</a></p>
-<h2 id="其他教程"><a href="#其他教程" class="headerlink" title="其他教程"></a>其他教程</h2><p>1.定向梯度和物体检测直方图<br><a href="http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/</a><br>2.图形金字塔与Python和OpenCV<br><a href="http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/</a><br>3.使用Python和OpenCV来滑动Windows对象检测<br><a href="http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/</a><br>4.Non-Maximum Suppression for Object Detection in Python<br><a href="http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a><br>5.(Faster) Non-Maximum Suppression in Python<br><a href="http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/</a><br>6.Texture Matching using Local Binary Patterns (LBP), OpenCV, scikit-learn and Python<br><a href="http://hanzratech.in/2015/05/30/local-binary-patterns.html" target="_blank" rel="external">http://hanzratech.in/2015/05/30/local-binary-patterns.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1766,7 +1786,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
