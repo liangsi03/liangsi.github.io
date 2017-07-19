@@ -507,13 +507,7 @@
 <p>3.接下来设置sudo crontab -e打开crontab的配置<br>45 10 <em> </em> * sh的绝对路径 sh文件的绝对路径 &gt; 日志记录 2&gt;&amp;1</p>
 <p>4.使用以下重启crontab<br>sudo /etc/init.d/crond reload<br>sudo /etc/init.d/crond restart</p>
 <p>5.查看crontab任务,如有需要kill直接下面就ok啦<br>ps aux |grep xx_batch.sh<br>sudo kill-9 进程号。</p>
-<p>6.日志是清空还是追加：<br>清空文件内容命令<br>$ echo “” &gt;log.log</p>
-<blockquote>
-<p>是重写，覆盖式</p>
-<blockquote>
-<p>是尾部追加</p>
-</blockquote>
-</blockquote>
+<p>6.日志是清空还是追加：<br>清空文件内容命令<br>$ echo “” &gt;log.log<br>“&gt; 是重写，覆盖式”<br>“&gt;&gt;是尾部追加”</p>
 <p>7.如果机器上支持配置crontab以上就ok，如果不ok改用其他方法。</p>
 
           
