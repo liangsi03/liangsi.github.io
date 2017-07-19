@@ -260,6 +260,301 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/" itemprop="url">
+                  spark初步尝试-读hdfs数据及将hdfs写入hive表
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T14:22:00+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在线上机器用算法处理完数据后，需要将数据导入数据库中，这里就涉及到了spark怎么读hdfs数据及将hdfs数据写入hive表。<br>1.读hdfs数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">object SparkArchetype &#123;</div><div class="line">  def main(args: Array[String]): Unit =&#123;</div><div class="line">    val conf = new SparkConf().setAppName(&quot;就是个名字&quot;)</div><div class="line">    val sc = new SparkContext(conf)</div><div class="line">    val sqlContext = new HiveContext(sc)</div><div class="line">    val csv_path = &quot;XXXXXXXXXXX&quot;</div><div class="line">    import sqlContext.implicits._</div><div class="line">    val fs = FileSystem.get(new Configuration());</div><div class="line">    fs.delete(new Path(csv_path), true)</div><div class="line">    sqlContext.sql(&quot;sql语句&quot;).rdd.map(x=&gt;x.mkString(&quot;&quot;)).saveAsTextFile(csv_path)</div><div class="line">   </div><div class="line">    fs.setPermission(new Path(csv_path),FsPermission.valueOf(&quot;drwxrwxrwx&quot;))</div><div class="line">    val status = fs.listStatus(new Path(csv_path))</div><div class="line">    status.foreach(x=&gt;fs.setPermission(x.getPath,FsPermission.valueOf(&quot;drwxrwxrwx&quot;)))</div><div class="line">    //注意此处需要修改写入的文件权限</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>2.将hdfs数据写入hive表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">object SparkPutdata &#123;</div><div class="line">  def main(args: Array[String]) &#123;</div><div class="line">    val sc = new SparkContext(new SparkConf())</div><div class="line">    val sqlContext = new HiveContext(sc)</div><div class="line">    import sqlContext.implicits._</div><div class="line"></div><div class="line"></div><div class="line">    val inHdfsPath = &quot;XXXXXXXXXXXX&quot;</div><div class="line">    // date</div><div class="line">    var delta=1</div><div class="line">    var cal:Calendar = Calendar.getInstance()</div><div class="line">    var dateFormat:SimpleDateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;)</div><div class="line">    val nowDate= dateFormat.format(cal.getTime())</div><div class="line">    cal.add(Calendar.DATE, -delta)</div><div class="line">    val todayDate = dateFormat.format(cal.getTime())</div><div class="line"></div><div class="line">    if (inHdfsPath == &quot;&quot;) &#123;</div><div class="line">      println(&quot;inHdfsPath args must be indicated!&quot;)</div><div class="line">      sys.exit(1)</div><div class="line">    &#125;</div><div class="line">    // load data from local file</div><div class="line">    val textFileRdd = sc.textFile(s&quot;$inHdfsPath&quot;)</div><div class="line">    val hdfsDataRdd = textFileRdd.map(_.split(&quot; &quot;)).map(a=&gt;(字段))</div><div class="line">    hdfsDataRdd.toDF(字段名).registerTempTable(&quot;tmp_table&quot;)</div><div class="line">    val sql1 = s&quot;&quot;&quot;</div><div class="line">                  |CREATE TABLE IF NOT EXISTS table</div><div class="line">                  |(</div><div class="line">                  |字段定义</div><div class="line">                  |)</div><div class="line">                  |PARTITIONED BY (stat_date string)</div><div class="line">                  |ROW FORMAT DELIMITED</div><div class="line">                  |FIELDS TERMINATED BY &apos;\t&apos;</div><div class="line">                  |STORED AS TEXTFILE</div><div class="line">                  |&quot;&quot;&quot;.stripMargin(&apos;|&apos;)</div><div class="line">    sqlContext.sql(sql1)</div><div class="line"></div><div class="line">    val sql = s&quot;&quot;&quot;</div><div class="line">                 |INSERT INTO TABLE table PARTITION (stat_date=&apos;$todayDate&apos;)</div><div class="line">                 |SELECT 字段名</div><div class="line">                 |FROM tmp_table</div><div class="line">                 |&quot;&quot;&quot;.stripMargin(&apos;|&apos;)</div><div class="line">    sqlContext.sql(sql)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.spark教程及涉及到的hadoop shell<br><a href="http://www.cnblogs.com/shishanyuan/p/4699644.html" target="_blank" rel="external">http://www.cnblogs.com/shishanyuan/p/4699644.html</a><br><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html" target="_blank" rel="external">https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/19/crontab定时任务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/19/crontab定时任务/" itemprop="url">
+                  crontab定时任务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T14:10:59+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用tensorflow训练完的模型(情景分类+图片质量分)，对测试数据的准确率在95%左右，所以想在线上机器上用crontab布置定时任务。</p>
+<p>1.现将数据定时从hdfs拉下来<br>具体使用spark将数据读下来，并修改所涉及的文件夹权限，此处是个天坑<br>因代码涉及内部信息，不贴了吧<br>如果put麻烦强制覆盖，put -f，如果get也需要提前处理存储路径的问题，要不然会提示文件存在，一直写入失败。</p>
+<p>2.sh文件配置：<br>将运行的代码放到sh里面，并根据使用相应的配置。<br>然后：对生成的sh添加权限，chmod +x file.sh，要是开777可以忽略</p>
+<p>3.接下来设置sudo crontab -e打开crontab的配置<br>45 10 <em> </em> * sh的绝对路径 sh文件的绝对路径 &gt; 日志记录 2&gt;&amp;1</p>
+<p>4.使用以下重启crontab<br>sudo /etc/init.d/crond reload<br>sudo /etc/init.d/crond restart</p>
+<p>5.查看crontab任务,如有需要kill直接下面就ok啦<br>ps aux |grep xx_batch.sh<br>sudo kill-9 进程号。</p>
+<p>6.日志是清空还是追加：<br>清空文件内容命令<br>$ echo “” &gt;log.log</p>
+<blockquote>
+<p>是重写，覆盖式</p>
+<blockquote>
+<p>是尾部追加</p>
+</blockquote>
+</blockquote>
+<p>7.如果机器上支持配置crontab以上就ok，如果不ok改用其他方法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/06/30/生成式对抗网络GAN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1390,336 +1685,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/27/python pip常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liangsi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="筱沫私房菜">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/27/python pip常用命令/" itemprop="url">
-                  python pip 常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T14:56:07+08:00">
-                2017-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/小工具/" itemprop="url" rel="index">
-                    <span itemprop="name">小工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-列出已安装的包"><a href="#1-列出已安装的包" class="headerlink" title="1.列出已安装的包"></a>1.列出已安装的包</h2><p>pip freeze or pip list</p>
-<h2 id="2-导出requirements-txt"><a href="#2-导出requirements-txt" class="headerlink" title="2.导出requirements.txt"></a>2.导出requirements.txt</h2><p>pip freeze &gt; &lt;目录&gt;/requirements.txt</p>
-<h2 id="3-安装包"><a href="#3-安装包" class="headerlink" title="3.安装包"></a>3.安装包</h2><h3 id="3-1在线安装"><a href="#3-1在线安装" class="headerlink" title="3.1在线安装"></a>3.1在线安装</h3><p>pip install &lt;包名&gt; 或 pip install -r requirements.txt</p>
-<p>通过使用== &gt;= &lt;= &gt; &lt;来指定版本，不写则安装最新版</p>
-<p>requirements.txt内容格式为：</p>
-<p>APScheduler==2.1.2<br>Django==1.5.4<br>MySQL-Connector-Python==2.0.1<br>MySQL-python==1.2.3<br>PIL==1.1.7<br>South==1.0.2<br>django-grappelli==2.6.3<br>django-pagination==1.0.7</p>
-<h3 id="3-2安装本地安装包"><a href="#3-2安装本地安装包" class="headerlink" title="3.2安装本地安装包"></a>3.2安装本地安装包</h3><p>pip install &lt;目录&gt;/&lt;文件名&gt; 或 pip install –use-wheel –no-index –find-links=wheelhouse/ &lt;包名&gt;</p>
-<p>&lt;包名&gt;前有空格</p>
-<p>可简写为</p>
-<p>pip install –no-index -f=&lt;目录&gt;/ &lt;包名&gt;</p>
-<h2 id="4-卸载包"><a href="#4-卸载包" class="headerlink" title="4.卸载包"></a>4.卸载包</h2><p>pip uninstall &lt;包名&gt; 或 pip uninstall -r requirements.txt</p>
-<h2 id="5-升级包"><a href="#5-升级包" class="headerlink" title="5.升级包"></a>5.升级包</h2><p>pip install -U &lt;包名&gt;</p>
-<p>或：pip install &lt;包名&gt; –upgrade</p>
-<h2 id="6-升级pip"><a href="#6-升级pip" class="headerlink" title="6.升级pip"></a>6.升级pip</h2><p>pip install -U pip</p>
-<h2 id="7-显示包所在的目录"><a href="#7-显示包所在的目录" class="headerlink" title="7.显示包所在的目录"></a>7.显示包所在的目录</h2><p>pip show -f &lt;包名&gt;</p>
-<h2 id="8-搜索包"><a href="#8-搜索包" class="headerlink" title="8.搜索包"></a>8.搜索包</h2><p>pip search &lt;搜索关键字&gt;</p>
-<h2 id="9-查询可升级的包"><a href="#9-查询可升级的包" class="headerlink" title="9.查询可升级的包"></a>9.查询可升级的包</h2><p>pip list -o</p>
-<h2 id="10-下载包而不安装"><a href="#10-下载包而不安装" class="headerlink" title="10.下载包而不安装"></a>10.下载包而不安装</h2><p>pip install &lt;包名&gt; -d &lt;目录&gt; 或 pip install -d &lt;目录&gt; -r requirements.txt</p>
-<h2 id="11-打包"><a href="#11-打包" class="headerlink" title="11.打包"></a>11.打包</h2><p>pip wheel &lt;包名&gt;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/27/git常用命令行/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liangsi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="筱沫私房菜">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/27/git常用命令行/" itemprop="url">
-                  git常用命令行
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T14:54:46+08:00">
-                2017-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>git branch 查看本地所有分支</li>
-<li>git status 查看当前状态 </li>
-<li>git commit 提交 </li>
-<li>git branch -a 查看所有的分支</li>
-<li>git branch -r 查看远程所有分支</li>
-<li>git commit -am “init” 提交并且加注释 </li>
-<li>git remote add origin - git@192.168.1.119:ndshow</li>
-<li>git push origin master 将文件给推到服务器上 </li>
-<li>git remote show origin 显示远程库origin里的资源 </li>
-<li>git push origin master:develop</li>
-<li>git push origin master:hb-dev 将本地库与服务器上的库进行关联 </li>
-<li>git checkout –track origin/dev 切换到远程dev分支</li>
-<li>git branch -D master develop 删除本地库develop</li>
-<li>git checkout -b dev 建立一个新的本地分支dev</li>
-<li>git merge origin/dev 将分支dev与当前分支进行合并</li>
-<li>git checkout dev 切换到本地dev分支</li>
-<li>git remote show 查看远程库</li>
-<li>git add .</li>
-<li>git rm 文件名(包括路径) 从- git中删除指定文件</li>
-<li>git clone - git://- github.com/schacon/grit.- git 从服务器上将代码给拉下来</li>
-<li>git config –list 看所有用户</li>
-<li>git ls-files 看已经被提交的</li>
-<li>git rm [file name] 删除一个文件</li>
-<li>git commit -a 提交当前repos的所有的改变</li>
-<li>git add [file name] 添加一个文件到- git index</li>
-<li>git commit -v 当你用－v参数的时候可以看commit的差异</li>
-<li>git commit -m “This is the message describing the commit” 添加commit信息</li>
-<li>git commit -a -a是代表add，把所有的change加到- git index里然后再commit</li>
-<li>git commit -a -v 一般提交命令</li>
-<li>git log 看你commit的日志</li>
-<li>git diff 查看尚未暂存的更新</li>
-<li>git rm a.a 移除文件(从暂存区和工作区中删除)</li>
-<li>git rm –cached a.a 移除文件(只从暂存区中删除)</li>
-<li>git commit -m “remove” 移除文件(从- git中删除)</li>
-<li>git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</li>
-<li>git diff –cached 或 $ - git diff –staged 查看尚未提交的更新</li>
-<li>git stash push 将文件给push到一个临时空间中</li>
-<li>git stash pop 将文件从临时空间pop下来</li>
-<li>git remote add origin - git@- github.com:username/Hello-World.- git</li>
-<li>git push origin master 将本地项目给提交到服务器中</li>
-<li>git pull 本地与服务器端同步</li>
-<li>git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</li>
-<li>git push origin serverfix:awesomebranch</li>
-<li>git fetch 相当于是从远程获取最新版本到本地，不会自动merge</li>
-<li>git commit -a -m “log_message” (-a是提交所有改动，-m是加入log信息) 本地修改同步至服务器端 ：</li>
-<li>git branch branch_0.1 master 从主分支master创建branch_0.1分支</li>
-<li>git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</li>
-<li>git checkout branch_1.0/master 切换到branch_1.0/master分支</li>
-<li>du -hs</li>
-<li>git branch 删除远程branch</li>
-<li>git push origin :branch_remote_name</li>
-<li>git branch -r -d branch_remote_name</li>
-</ul>
-<p>图示：<br><img src="/2017/04/27/git常用命令行/1.jpg" alt="图示"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1769,7 +1734,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1778,7 +1743,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1787,7 +1752,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="crontab," />
 
 
 
@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
-<meta name="keywords">
+<meta name="description" content="使用tensorflow训练完的模型(情景分类+图片质量分)，对测试数据的准确率在95%左右，所以想在线上机器上用crontab布置定时任务。 1.现将数据定时从hdfs拉下来具体使用spark将数据读下来，并修改所涉及的文件夹权限，此处是个天坑因代码涉及内部信息，不贴了吧如果put麻烦强制覆盖，put -f，如果get也需要提前处理存储路径的问题，要不然会提示文件存在，一直写入失败。 2.sh文">
+<meta name="keywords" content="crontab">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片水印识别的各种尝试">
-<meta property="og:url" content="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/index.html">
+<meta property="og:title" content="crontab定时任务">
+<meta property="og:url" content="https://liangsi.github.io/2017/07/19/crontab定时任务/index.html">
 <meta property="og:site_name" content="筱沫私房菜">
-<meta property="og:description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
-<meta property="og:updated_time" content="2017-04-27T09:20:07.000Z">
+<meta property="og:description" content="使用tensorflow训练完的模型(情景分类+图片质量分)，对测试数据的准确率在95%左右，所以想在线上机器上用crontab布置定时任务。 1.现将数据定时从hdfs拉下来具体使用spark将数据读下来，并修改所涉及的文件夹权限，此处是个天坑因代码涉及内部信息，不贴了吧如果put麻烦强制覆盖，put -f，如果get也需要提前处理存储路径的问题，要不然会提示文件存在，一直写入失败。 2.sh文">
+<meta property="og:updated_time" content="2017-07-19T06:21:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图片水印识别的各种尝试">
-<meta name="twitter:description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
+<meta name="twitter:title" content="crontab定时任务">
+<meta name="twitter:description" content="使用tensorflow训练完的模型(情景分类+图片质量分)，对测试数据的准确率在95%左右，所以想在线上机器上用crontab布置定时任务。 1.现将数据定时从hdfs拉下来具体使用spark将数据读下来，并修改所涉及的文件夹权限，此处是个天坑因代码涉及内部信息，不贴了吧如果put麻烦强制覆盖，put -f，如果get也需要提前处理存储路径的问题，要不然会提示文件存在，一直写入失败。 2.sh文">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/"/>
+  <link rel="canonical" href="https://liangsi.github.io/2017/07/19/crontab定时任务/"/>
 
 
 
 
 
-  <title> 图片水印识别的各种尝试 | 筱沫私房菜 </title>
+  <title> crontab定时任务 | 筱沫私房菜 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/19/crontab定时任务/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liangsi">
@@ -281,7 +281,7 @@
             
             
               
-                图片水印识别的各种尝试
+                crontab定时任务
               
             
           </h1>
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T10:49:23+08:00">
-                2017-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T14:10:59+08:00">
+                2017-07-19
               </time>
             
 
@@ -306,6 +306,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -332,11 +354,20 @@
       
 
       
-        <h2 id="图片分类"><a href="#图片分类" class="headerlink" title="图片分类"></a>图片分类</h2><p>1.抽取特征<br>SIFT，SURF，HOG，颜色等等<br>然后SVM分类<br>如果没有水印的召回率特别高，可以结合搜这个结果<br>参考链接：<br>scikit Image:sklean<br><a href="http://scikit-learn.org/stable/" target="_blank" rel="external">http://scikit-learn.org/stable/</a></p>
-<h2 id="图片目标识别"><a href="#图片目标识别" class="headerlink" title="图片目标识别"></a>图片目标识别</h2><p>把水印当做目标</p>
-<h2 id="图片目标识别中比较高级的方法"><a href="#图片目标识别中比较高级的方法" class="headerlink" title="图片目标识别中比较高级的方法"></a>图片目标识别中比较高级的方法</h2><p>1.fast rcnn<br>参考链接<br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html</a><br><a href="http://blog.csdn.net/smf0504/article/details/52751251" target="_blank" rel="external">http://blog.csdn.net/smf0504/article/details/52751251</a></p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>基于SIFT特征和SVM的图像分类<br>参考链接：<br><a href="http://www.ithao123.cn/content-8721974.html" target="_blank" rel="external">http://www.ithao123.cn/content-8721974.html</a></p>
-<h2 id="其他教程"><a href="#其他教程" class="headerlink" title="其他教程"></a>其他教程</h2><p>1.定向梯度和物体检测直方图<br><a href="http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/</a><br>2.图形金字塔与Python和OpenCV<br><a href="http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/</a><br>3.使用Python和OpenCV来滑动Windows对象检测<br><a href="http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/</a><br>4.Non-Maximum Suppression for Object Detection in Python<br><a href="http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a><br>5.(Faster) Non-Maximum Suppression in Python<br><a href="http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/</a><br>6.Texture Matching using Local Binary Patterns (LBP), OpenCV, scikit-learn and Python<br><a href="http://hanzratech.in/2015/05/30/local-binary-patterns.html" target="_blank" rel="external">http://hanzratech.in/2015/05/30/local-binary-patterns.html</a></p>
+        <p>使用tensorflow训练完的模型(情景分类+图片质量分)，对测试数据的准确率在95%左右，所以想在线上机器上用crontab布置定时任务。</p>
+<p>1.现将数据定时从hdfs拉下来<br>具体使用spark将数据读下来，并修改所涉及的文件夹权限，此处是个天坑<br>因代码涉及内部信息，不贴了吧<br>如果put麻烦强制覆盖，put -f，如果get也需要提前处理存储路径的问题，要不然会提示文件存在，一直写入失败。</p>
+<p>2.sh文件配置：<br>将运行的代码放到sh里面，并根据使用相应的配置。<br>然后：对生成的sh添加权限，chmod +x file.sh，要是开777可以忽略</p>
+<p>3.接下来设置sudo crontab -e打开crontab的配置<br>45 10 <em> </em> * sh的绝对路径 sh文件的绝对路径 &gt; 日志记录 2&gt;&amp;1</p>
+<p>4.使用以下重启crontab<br>sudo /etc/init.d/crond reload<br>sudo /etc/init.d/crond restart</p>
+<p>5.查看crontab任务,如有需要kill直接下面就ok啦<br>ps aux |grep xx_batch.sh<br>sudo kill-9 进程号。</p>
+<p>6.日志是清空还是追加：<br>清空文件内容命令<br>$ echo “” &gt;log.log</p>
+<blockquote>
+<p>是重写，覆盖式</p>
+<blockquote>
+<p>是尾部追加</p>
+</blockquote>
+</blockquote>
+<p>7.如果机器上支持配置crontab以上就ok，如果不ok改用其他方法。</p>
 
       
     </div>
@@ -358,6 +389,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/crontab/" rel="tag"># crontab</a>
+          
+        </div>
+      
 
       
         
@@ -367,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/27/git常用命令行/" rel="next" title="git常用命令行">
-                <i class="fa fa-chevron-left"></i> git常用命令行
+              <a href="/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/" rel="next" title="spark初步尝试-读hdfs数据及将hdfs写入hive表">
+                <i class="fa fa-chevron-left"></i> spark初步尝试-读hdfs数据及将hdfs写入hive表
               </a>
             
           </div>
@@ -377,8 +414,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/20/python自动重命名文件下全部图片/" rel="prev" title="python自动重命名文件下全部图片">
-                python自动重命名文件下全部图片 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/30/生成式对抗网络GAN/" rel="prev" title="生成式对抗网络GAN">
+                生成式对抗网络GAN <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -426,17 +463,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/1.jpeg"
@@ -494,22 +522,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片分类"><span class="nav-text">图片分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片目标识别"><span class="nav-text">图片目标识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片目标识别中比较高级的方法"><span class="nav-text">图片目标识别中比较高级的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他教程"><span class="nav-text">其他教程</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

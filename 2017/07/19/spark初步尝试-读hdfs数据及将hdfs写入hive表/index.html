@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="spark," />
 
 
 
@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
-<meta name="keywords">
+<meta name="description" content="在线上机器用算法处理完数据后，需要将数据导入数据库中，这里就涉及到了spark怎么读hdfs数据及将hdfs数据写入hive表。1.读hdfs数据：12345678910111213141516object SparkArchetype &amp;#123;  def main(args: Array[String]): Unit =&amp;#123;    val conf = new SparkConf()">
+<meta name="keywords" content="spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片水印识别的各种尝试">
-<meta property="og:url" content="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/index.html">
+<meta property="og:title" content="spark初步尝试-读hdfs数据及将hdfs写入hive表">
+<meta property="og:url" content="https://liangsi.github.io/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/index.html">
 <meta property="og:site_name" content="筱沫私房菜">
-<meta property="og:description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
-<meta property="og:updated_time" content="2017-04-27T09:20:07.000Z">
+<meta property="og:description" content="在线上机器用算法处理完数据后，需要将数据导入数据库中，这里就涉及到了spark怎么读hdfs数据及将hdfs数据写入hive表。1.读hdfs数据：12345678910111213141516object SparkArchetype &amp;#123;  def main(args: Array[String]): Unit =&amp;#123;    val conf = new SparkConf()">
+<meta property="og:updated_time" content="2017-07-19T06:30:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图片水印识别的各种尝试">
-<meta name="twitter:description" content="图片分类1.抽取特征SIFT，SURF，HOG，颜色等等然后SVM分类如果没有水印的召回率特别高，可以结合搜这个结果参考链接：scikit Image:skleanhttp://scikit-learn.org/stable/ 图片目标识别把水印当做目标 图片目标识别中比较高级的方法1.fast rcnn参考链接http://www.cnblogs.com/louyihang-loves-baiy">
+<meta name="twitter:title" content="spark初步尝试-读hdfs数据及将hdfs写入hive表">
+<meta name="twitter:description" content="在线上机器用算法处理完数据后，需要将数据导入数据库中，这里就涉及到了spark怎么读hdfs数据及将hdfs数据写入hive表。1.读hdfs数据：12345678910111213141516object SparkArchetype &amp;#123;  def main(args: Array[String]): Unit =&amp;#123;    val conf = new SparkConf()">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/"/>
+  <link rel="canonical" href="https://liangsi.github.io/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/"/>
 
 
 
 
 
-  <title> 图片水印识别的各种尝试 | 筱沫私房菜 </title>
+  <title> spark初步尝试-读hdfs数据及将hdfs写入hive表 | 筱沫私房菜 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/26/图片水印识别的各种尝试/">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liangsi">
@@ -281,7 +281,7 @@
             
             
               
-                图片水印识别的各种尝试
+                spark初步尝试-读hdfs数据及将hdfs写入hive表
               
             
           </h1>
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T10:49:23+08:00">
-                2017-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T14:22:00+08:00">
+                2017-07-19
               </time>
             
 
@@ -306,6 +306,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -332,11 +354,9 @@
       
 
       
-        <h2 id="图片分类"><a href="#图片分类" class="headerlink" title="图片分类"></a>图片分类</h2><p>1.抽取特征<br>SIFT，SURF，HOG，颜色等等<br>然后SVM分类<br>如果没有水印的召回率特别高，可以结合搜这个结果<br>参考链接：<br>scikit Image:sklean<br><a href="http://scikit-learn.org/stable/" target="_blank" rel="external">http://scikit-learn.org/stable/</a></p>
-<h2 id="图片目标识别"><a href="#图片目标识别" class="headerlink" title="图片目标识别"></a>图片目标识别</h2><p>把水印当做目标</p>
-<h2 id="图片目标识别中比较高级的方法"><a href="#图片目标识别中比较高级的方法" class="headerlink" title="图片目标识别中比较高级的方法"></a>图片目标识别中比较高级的方法</h2><p>1.fast rcnn<br>参考链接<br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4885659.html?utm_source=tuicool&amp;utm_medium=referral</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4903231.html</a><br><a href="http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html" target="_blank" rel="external">http://www.cnblogs.com/louyihang-loves-baiyan/p/4906690.html</a><br><a href="http://blog.csdn.net/smf0504/article/details/52751251" target="_blank" rel="external">http://blog.csdn.net/smf0504/article/details/52751251</a></p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>基于SIFT特征和SVM的图像分类<br>参考链接：<br><a href="http://www.ithao123.cn/content-8721974.html" target="_blank" rel="external">http://www.ithao123.cn/content-8721974.html</a></p>
-<h2 id="其他教程"><a href="#其他教程" class="headerlink" title="其他教程"></a>其他教程</h2><p>1.定向梯度和物体检测直方图<br><a href="http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/</a><br>2.图形金字塔与Python和OpenCV<br><a href="http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/16/image-pyramids-with-python-and-opencv/</a><br>3.使用Python和OpenCV来滑动Windows对象检测<br><a href="http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/</a><br>4.Non-Maximum Suppression for Object Detection in Python<br><a href="http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a><br>5.(Faster) Non-Maximum Suppression in Python<br><a href="http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2015/02/16/faster-non-maximum-suppression-python/</a><br>6.Texture Matching using Local Binary Patterns (LBP), OpenCV, scikit-learn and Python<br><a href="http://hanzratech.in/2015/05/30/local-binary-patterns.html" target="_blank" rel="external">http://hanzratech.in/2015/05/30/local-binary-patterns.html</a></p>
+        <p>在线上机器用算法处理完数据后，需要将数据导入数据库中，这里就涉及到了spark怎么读hdfs数据及将hdfs数据写入hive表。<br>1.读hdfs数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">object SparkArchetype &#123;</div><div class="line">  def main(args: Array[String]): Unit =&#123;</div><div class="line">    val conf = new SparkConf().setAppName(&quot;就是个名字&quot;)</div><div class="line">    val sc = new SparkContext(conf)</div><div class="line">    val sqlContext = new HiveContext(sc)</div><div class="line">    val csv_path = &quot;XXXXXXXXXXX&quot;</div><div class="line">    import sqlContext.implicits._</div><div class="line">    val fs = FileSystem.get(new Configuration());</div><div class="line">    fs.delete(new Path(csv_path), true)</div><div class="line">    sqlContext.sql(&quot;sql语句&quot;).rdd.map(x=&gt;x.mkString(&quot;&quot;)).saveAsTextFile(csv_path)</div><div class="line">   </div><div class="line">    fs.setPermission(new Path(csv_path),FsPermission.valueOf(&quot;drwxrwxrwx&quot;))</div><div class="line">    val status = fs.listStatus(new Path(csv_path))</div><div class="line">    status.foreach(x=&gt;fs.setPermission(x.getPath,FsPermission.valueOf(&quot;drwxrwxrwx&quot;)))</div><div class="line">    //注意此处需要修改写入的文件权限</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>2.将hdfs数据写入hive表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">object SparkPutdata &#123;</div><div class="line">  def main(args: Array[String]) &#123;</div><div class="line">    val sc = new SparkContext(new SparkConf())</div><div class="line">    val sqlContext = new HiveContext(sc)</div><div class="line">    import sqlContext.implicits._</div><div class="line"></div><div class="line"></div><div class="line">    val inHdfsPath = &quot;XXXXXXXXXXXX&quot;</div><div class="line">    // date</div><div class="line">    var delta=1</div><div class="line">    var cal:Calendar = Calendar.getInstance()</div><div class="line">    var dateFormat:SimpleDateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;)</div><div class="line">    val nowDate= dateFormat.format(cal.getTime())</div><div class="line">    cal.add(Calendar.DATE, -delta)</div><div class="line">    val todayDate = dateFormat.format(cal.getTime())</div><div class="line"></div><div class="line">    if (inHdfsPath == &quot;&quot;) &#123;</div><div class="line">      println(&quot;inHdfsPath args must be indicated!&quot;)</div><div class="line">      sys.exit(1)</div><div class="line">    &#125;</div><div class="line">    // load data from local file</div><div class="line">    val textFileRdd = sc.textFile(s&quot;$inHdfsPath&quot;)</div><div class="line">    val hdfsDataRdd = textFileRdd.map(_.split(&quot; &quot;)).map(a=&gt;(字段))</div><div class="line">    hdfsDataRdd.toDF(字段名).registerTempTable(&quot;tmp_table&quot;)</div><div class="line">    val sql1 = s&quot;&quot;&quot;</div><div class="line">                  |CREATE TABLE IF NOT EXISTS table</div><div class="line">                  |(</div><div class="line">                  |字段定义</div><div class="line">                  |)</div><div class="line">                  |PARTITIONED BY (stat_date string)</div><div class="line">                  |ROW FORMAT DELIMITED</div><div class="line">                  |FIELDS TERMINATED BY &apos;\t&apos;</div><div class="line">                  |STORED AS TEXTFILE</div><div class="line">                  |&quot;&quot;&quot;.stripMargin(&apos;|&apos;)</div><div class="line">    sqlContext.sql(sql1)</div><div class="line"></div><div class="line">    val sql = s&quot;&quot;&quot;</div><div class="line">                 |INSERT INTO TABLE table PARTITION (stat_date=&apos;$todayDate&apos;)</div><div class="line">                 |SELECT 字段名</div><div class="line">                 |FROM tmp_table</div><div class="line">                 |&quot;&quot;&quot;.stripMargin(&apos;|&apos;)</div><div class="line">    sqlContext.sql(sql)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.spark教程及涉及到的hadoop shell<br><a href="http://www.cnblogs.com/shishanyuan/p/4699644.html" target="_blank" rel="external">http://www.cnblogs.com/shishanyuan/p/4699644.html</a><br><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html" target="_blank" rel="external">https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html</a></p>
 
       
     </div>
@@ -358,6 +378,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/spark/" rel="tag"># spark</a>
+          
+        </div>
+      
 
       
         
@@ -367,18 +393,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/27/git常用命令行/" rel="next" title="git常用命令行">
-                <i class="fa fa-chevron-left"></i> git常用命令行
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/20/python自动重命名文件下全部图片/" rel="prev" title="python自动重命名文件下全部图片">
-                python自动重命名文件下全部图片 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/19/crontab定时任务/" rel="prev" title="crontab定时任务">
+                crontab定时任务 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -426,17 +448,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/1.jpeg"
@@ -494,22 +507,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片分类"><span class="nav-text">图片分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片目标识别"><span class="nav-text">图片目标识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片目标识别中比较高级的方法"><span class="nav-text">图片目标识别中比较高级的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他教程"><span class="nav-text">其他教程</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
