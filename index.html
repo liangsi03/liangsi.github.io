@@ -260,6 +260,150 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/25/使用VGG-19的图片风格迁移/" itemprop="url">
+                  使用VGG-19的neural-style图片风格迁移
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T09:45:17+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像算法/" itemprop="url" rel="index">
+                    <span itemprop="name">图像算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文的目的只是想尝试下neural-style，看看是不是能把图片加一个风格的模板，事实上改善图片风格成油画，水彩画等比较有效，但实际上改变个图片的风格，突出主题，相对比较难些。<br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div></pre></td><td class="code"><pre><div class="line">import os</div><div class="line"></div><div class="line">import numpy as np</div><div class="line">import scipy.misc</div><div class="line"></div><div class="line">from stylize import stylize</div><div class="line"></div><div class="line">import math</div><div class="line">from argparse import ArgumentParser</div><div class="line"></div><div class="line">from PIL import Image</div><div class="line"></div><div class="line"># default arguments</div><div class="line">CONTENT_WEIGHT = 5e0</div><div class="line">CONTENT_WEIGHT_BLEND = 1</div><div class="line">STYLE_WEIGHT = 5e2</div><div class="line">TV_WEIGHT = 1e2</div><div class="line">STYLE_LAYER_WEIGHT_EXP = 1</div><div class="line">LEARNING_RATE = 1e1</div><div class="line">BETA1 = 0.9</div><div class="line">BETA2 = 0.999</div><div class="line">EPSILON = 1e-08</div><div class="line">STYLE_SCALE = 1.0</div><div class="line">ITERATIONS = 1000</div><div class="line">VGG_PATH = &apos;imagenet-vgg-verydeep-19.mat&apos;</div><div class="line">POOLING = &apos;max&apos;</div><div class="line"></div><div class="line">def build_parser():</div><div class="line">    parser = ArgumentParser()</div><div class="line">    parser.add_argument(&apos;--content&apos;,</div><div class="line">            dest=&apos;content&apos;, help=&apos;content image&apos;,</div><div class="line">            metavar=&apos;CONTENT&apos;, required=True)</div><div class="line">    parser.add_argument(&apos;--styles&apos;,</div><div class="line">            dest=&apos;styles&apos;,</div><div class="line">            nargs=&apos;+&apos;, help=&apos;one or more style images&apos;,</div><div class="line">            metavar=&apos;STYLE&apos;, required=True)</div><div class="line">    parser.add_argument(&apos;--output&apos;,</div><div class="line">            dest=&apos;output&apos;, help=&apos;output path&apos;,</div><div class="line">            metavar=&apos;OUTPUT&apos;, required=True)</div><div class="line">    parser.add_argument(&apos;--iterations&apos;, type=int,</div><div class="line">            dest=&apos;iterations&apos;, help=&apos;iterations (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;ITERATIONS&apos;, default=ITERATIONS)</div><div class="line">    parser.add_argument(&apos;--print-iterations&apos;, type=int,</div><div class="line">            dest=&apos;print_iterations&apos;, help=&apos;statistics printing frequency&apos;,</div><div class="line">            metavar=&apos;PRINT_ITERATIONS&apos;)</div><div class="line">    parser.add_argument(&apos;--checkpoint-output&apos;,</div><div class="line">            dest=&apos;checkpoint_output&apos;, help=&apos;checkpoint output format, e.g. output%%s.jpg&apos;,</div><div class="line">            metavar=&apos;OUTPUT&apos;)</div><div class="line">    parser.add_argument(&apos;--checkpoint-iterations&apos;, type=int,</div><div class="line">            dest=&apos;checkpoint_iterations&apos;, help=&apos;checkpoint frequency&apos;,</div><div class="line">            metavar=&apos;CHECKPOINT_ITERATIONS&apos;)</div><div class="line">    parser.add_argument(&apos;--width&apos;, type=int,</div><div class="line">            dest=&apos;width&apos;, help=&apos;output width&apos;,</div><div class="line">            metavar=&apos;WIDTH&apos;)</div><div class="line">    parser.add_argument(&apos;--style-scales&apos;, type=float,</div><div class="line">            dest=&apos;style_scales&apos;,</div><div class="line">            nargs=&apos;+&apos;, help=&apos;one or more style scales&apos;,</div><div class="line">            metavar=&apos;STYLE_SCALE&apos;)</div><div class="line">    parser.add_argument(&apos;--network&apos;,</div><div class="line">            dest=&apos;network&apos;, help=&apos;path to network parameters (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;VGG_PATH&apos;, default=VGG_PATH)</div><div class="line">    parser.add_argument(&apos;--content-weight-blend&apos;, type=float,</div><div class="line">            dest=&apos;content_weight_blend&apos;, help=&apos;content weight blend, conv4_2 * blend + conv5_2 * (1-blend) (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;CONTENT_WEIGHT_BLEND&apos;, default=CONTENT_WEIGHT_BLEND)</div><div class="line">    parser.add_argument(&apos;--content-weight&apos;, type=float,</div><div class="line">            dest=&apos;content_weight&apos;, help=&apos;content weight (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;CONTENT_WEIGHT&apos;, default=CONTENT_WEIGHT)</div><div class="line">    parser.add_argument(&apos;--style-weight&apos;, type=float,</div><div class="line">            dest=&apos;style_weight&apos;, help=&apos;style weight (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;STYLE_WEIGHT&apos;, default=STYLE_WEIGHT)</div><div class="line">    parser.add_argument(&apos;--style-layer-weight-exp&apos;, type=float,</div><div class="line">            dest=&apos;style_layer_weight_exp&apos;, help=&apos;style layer weight exponentional increase - weight(layer&lt;n+1&gt;) = weight_exp*weight(layer&lt;n&gt;) (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;STYLE_LAYER_WEIGHT_EXP&apos;, default=STYLE_LAYER_WEIGHT_EXP)</div><div class="line">    parser.add_argument(&apos;--style-blend-weights&apos;, type=float,</div><div class="line">            dest=&apos;style_blend_weights&apos;, help=&apos;style blending weights&apos;,</div><div class="line">            nargs=&apos;+&apos;, metavar=&apos;STYLE_BLEND_WEIGHT&apos;)</div><div class="line">    parser.add_argument(&apos;--tv-weight&apos;, type=float,</div><div class="line">            dest=&apos;tv_weight&apos;, help=&apos;total variation regularization weight (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;TV_WEIGHT&apos;, default=TV_WEIGHT)</div><div class="line">    parser.add_argument(&apos;--learning-rate&apos;, type=float,</div><div class="line">            dest=&apos;learning_rate&apos;, help=&apos;learning rate (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;LEARNING_RATE&apos;, default=LEARNING_RATE)</div><div class="line">    parser.add_argument(&apos;--beta1&apos;, type=float,</div><div class="line">            dest=&apos;beta1&apos;, help=&apos;Adam: beta1 parameter (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;BETA1&apos;, default=BETA1)</div><div class="line">    parser.add_argument(&apos;--beta2&apos;, type=float,</div><div class="line">            dest=&apos;beta2&apos;, help=&apos;Adam: beta2 parameter (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;BETA2&apos;, default=BETA2)</div><div class="line">    parser.add_argument(&apos;--eps&apos;, type=float,</div><div class="line">            dest=&apos;epsilon&apos;, help=&apos;Adam: epsilon parameter (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;EPSILON&apos;, default=EPSILON)</div><div class="line">    parser.add_argument(&apos;--initial&apos;,</div><div class="line">            dest=&apos;initial&apos;, help=&apos;initial image&apos;,</div><div class="line">            metavar=&apos;INITIAL&apos;)</div><div class="line">    parser.add_argument(&apos;--initial-noiseblend&apos;, type=float,</div><div class="line">            dest=&apos;initial_noiseblend&apos;, help=&apos;ratio of blending initial image with normalized noise (if no initial image specified, content image is used) (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;INITIAL_NOISEBLEND&apos;)</div><div class="line">    parser.add_argument(&apos;--preserve-colors&apos;, action=&apos;store_true&apos;,</div><div class="line">            dest=&apos;preserve_colors&apos;, help=&apos;style-only transfer (preserving colors) - if color transfer is not needed&apos;)</div><div class="line">    parser.add_argument(&apos;--pooling&apos;,</div><div class="line">            dest=&apos;pooling&apos;, help=&apos;pooling layer configuration: max or avg (default %(default)s)&apos;,</div><div class="line">            metavar=&apos;POOLING&apos;, default=POOLING)</div><div class="line">    return parser</div><div class="line"></div><div class="line"></div><div class="line">def main():</div><div class="line">    parser = build_parser()</div><div class="line">    options = parser.parse_args()</div><div class="line"></div><div class="line">    if not os.path.isfile(options.network):</div><div class="line">        parser.error(&quot;Network %s does not exist. (Did you forget to download it?)&quot; % options.network)</div><div class="line"></div><div class="line">    content_image = imread(options.content)</div><div class="line">    style_images = [imread(style) for style in options.styles]</div><div class="line"></div><div class="line">    width = options.width</div><div class="line">    if width is not None:</div><div class="line">        new_shape = (int(math.floor(float(content_image.shape[0]) /</div><div class="line">                content_image.shape[1] * width)), width)</div><div class="line">        content_image = scipy.misc.imresize(content_image, new_shape)</div><div class="line">    target_shape = content_image.shape</div><div class="line">    for i in range(len(style_images)):</div><div class="line">        style_scale = STYLE_SCALE</div><div class="line">        if options.style_scales is not None:</div><div class="line">            style_scale = options.style_scales[i]</div><div class="line">        style_images[i] = scipy.misc.imresize(style_images[i], style_scale *</div><div class="line">                target_shape[1] / style_images[i].shape[1])</div><div class="line"></div><div class="line">    style_blend_weights = options.style_blend_weights</div><div class="line">    if style_blend_weights is None:</div><div class="line">        # default is equal weights</div><div class="line">        style_blend_weights = [1.0/len(style_images) for _ in style_images]</div><div class="line">    else:</div><div class="line">        total_blend_weight = sum(style_blend_weights)</div><div class="line">        style_blend_weights = [weight/total_blend_weight</div><div class="line">                               for weight in style_blend_weights]</div><div class="line"></div><div class="line">    initial = options.initial</div><div class="line">    if initial is not None:</div><div class="line">        initial = scipy.misc.imresize(imread(initial), content_image.shape[:2])</div><div class="line">        # Initial guess is specified, but not noiseblend - no noise should be blended</div><div class="line">        if options.initial_noiseblend is None:</div><div class="line">            options.initial_noiseblend = 0.0</div><div class="line">    else:</div><div class="line">        # Neither inital, nor noiseblend is provided, falling back to random generated initial guess</div><div class="line">        if options.initial_noiseblend is None:</div><div class="line">            options.initial_noiseblend = 1.0</div><div class="line">        if options.initial_noiseblend &lt; 1.0:</div><div class="line">            initial = content_image</div><div class="line"></div><div class="line">    if options.checkpoint_output and &quot;%s&quot; not in options.checkpoint_output:</div><div class="line">        parser.error(&quot;To save intermediate images, the checkpoint output &quot;</div><div class="line">                     &quot;parameter must contain `%s` (e.g. `foo%s.jpg`)&quot;)</div><div class="line"></div><div class="line">    for iteration, image in stylize(</div><div class="line"></div><div class="line">        network=options.network,</div><div class="line">        ##network=&apos;/Users/liangsi/Downloads/neural-style/imagenet-vgg-verydeep-19.mat&apos;,</div><div class="line">        initial=initial,</div><div class="line">        initial_noiseblend=options.initial_noiseblend,</div><div class="line">        content=content_image,</div><div class="line">        styles=style_images,</div><div class="line">        preserve_colors=options.preserve_colors,</div><div class="line">        iterations=options.iterations,</div><div class="line">        content_weight=options.content_weight,</div><div class="line">        content_weight_blend=options.content_weight_blend,</div><div class="line">        style_weight=options.style_weight,</div><div class="line">        style_layer_weight_exp=options.style_layer_weight_exp,</div><div class="line">        style_blend_weights=style_blend_weights,</div><div class="line">        tv_weight=options.tv_weight,</div><div class="line">        learning_rate=options.learning_rate,</div><div class="line">        beta1=options.beta1,</div><div class="line">        beta2=options.beta2,</div><div class="line">        epsilon=options.epsilon,</div><div class="line">        pooling=options.pooling,</div><div class="line">        print_iterations=options.print_iterations,</div><div class="line">        checkpoint_iterations=options.checkpoint_iterations</div><div class="line">    ):</div><div class="line">        output_file = None</div><div class="line">        combined_rgb = image</div><div class="line">        if iteration is not None:</div><div class="line">            if options.checkpoint_output:</div><div class="line">                output_file = options.checkpoint_output % iteration</div><div class="line">        else:</div><div class="line">            output_file = options.output</div><div class="line">        if output_file:</div><div class="line">            imsave(output_file, combined_rgb)</div><div class="line"></div><div class="line"></div><div class="line">def imread(path):</div><div class="line">    img = scipy.misc.imread(path).astype(np.float)</div><div class="line">    if len(img.shape) == 2:</div><div class="line">        # grayscale</div><div class="line">        img = np.dstack((img,img,img))</div><div class="line">    elif img.shape[2] == 4:</div><div class="line">        # PNG with alpha channel</div><div class="line">        img = img[:,:,:3]</div><div class="line">    return img</div><div class="line"></div><div class="line"></div><div class="line">def imsave(path, img):</div><div class="line">    img = np.clip(img, 0, 255).astype(np.uint8)</div><div class="line">    Image.fromarray(img).save(path, quality=95)</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>直接使用的是imagenet-vgg-verydeep-19.mat模型。</p>
+<p>直接运行如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python neural_style.py --content 111.jpg --styles 222.jpg --output 333.jpg</div></pre></td></tr></table></figure></p>
+<p>content：<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/111.jpg" alt="图示"><br>styles:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/666.jpg" alt="图示"><br>output:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/333.jpg" alt="图示"></p>
+<p>参考：<br><a href="http://www.cnblogs.com/lijingpeng/p/6084666.html" target="_blank" rel="external">http://www.cnblogs.com/lijingpeng/p/6084666.html</a><br><a href="http://blog.csdn.net/jsond/article/details/72667829" target="_blank" rel="external">http://blog.csdn.net/jsond/article/details/72667829</a><br><a href="https://github.com/lijingpeng/neural-style" target="_blank" rel="external">https://github.com/lijingpeng/neural-style</a><br><a href="http://www.cnblogs.com/pandaroll/p/6718483.html" target="_blank" rel="external">http://www.cnblogs.com/pandaroll/p/6718483.html</a><br><a href="https://github.com/anishathalye/neural-style" target="_blank" rel="external">https://github.com/anishathalye/neural-style</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/07/19/spark初步尝试-读hdfs数据及将hdfs写入hive表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1534,151 +1678,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/27/识别图中二维码/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liangsi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="筱沫私房菜">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/27/识别图中二维码/" itemprop="url">
-                  识别图中二维码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T15:52:23+08:00">
-                2017-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/图像处理/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.把图片中二维码识别并标注出来</p>
-<p>参考链接：<br><a href="http://www.cocoachina.com/ios/20160623/16812.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20160623/16812.html</a></p>
-<p>等有空再慢慢的研究</p>
-<p>2.二维码解析：</p>
-<p>可以使用zxing的包，是解析其中具体的内容。</p>
-<p>待定。。。。。。等我有空再去测试程序。。。。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1728,7 +1727,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1746,7 +1745,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

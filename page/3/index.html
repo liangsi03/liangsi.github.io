@@ -260,6 +260,162 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/04/01/人脸识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liangsi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱沫私房菜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/01/人脸识别/" itemprop="url">
+                  人脸识别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T15:24:10+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/自然语言处理/" itemprop="url" rel="index">
+                    <span itemprop="name">自然语言处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>说明：人脸识别实例</p>
+<h2 id="提前安装"><a href="#提前安装" class="headerlink" title="提前安装"></a>提前安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.anaconda-python</div><div class="line">2.Dlib</div><div class="line">   pip install dlib</div><div class="line">3.scikit-image </div><div class="line">   pip install scikit-image</div></pre></td></tr></table></figure>
+<h2 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h2><p>之所以用Dlib来实现人脸识别，是因为它已经替我们做好了绝大部分的工作，我们只需要去调用就行了。Dlib里面有人脸检测器，有训练好的人脸关键点检测器，也有训练好的人脸识别模型。准备了六个候选人的图片放在candidate-faces文件夹中，然后需要识别的人脸图片test.jpg。我们的工作就是要检测到test.jpg中的人脸，然后判断她到底是候选人中的谁。另外的girl-face-rec.py是我们的python脚本。shape_predictor_68_face_landmarks.dat是已经训练好的人脸关键点检测器。dlib_face_recognition_resnet_model_v1.dat是训练好的ResNet人脸识别模型。ResNet是何凯明在微软的时候提出的深度残差网络，获得了 ImageNet 2015 冠军，通过让网络对残差进行学习，在深度和精度上做到了比CNN 更加强大。</p>
+<h2 id="1-前期准备"><a href="#1-前期准备" class="headerlink" title="1.前期准备"></a>1.前期准备</h2><ul>
+<li>shape_predictor_68_face_landmarks.dat和dlib_face_recognition_resnet_model_v1.dat都可以在这里找到。不能点击超链接的可以直接点开此网址：<a href="http://dlib.net/files/" target="_blank" rel="external">http://dlib.net/files/</a>。</li>
+<li>然后准备几个人的人脸图片作为候选人脸，最好是正脸。放到candidate-faces文件夹中。</li>
+</ul>
+<h2 id="2-识别流程"><a href="#2-识别流程" class="headerlink" title="2.识别流程"></a>2.识别流程</h2><ul>
+<li>数据准备完毕，接下来就是代码了。识别的大致流程是这样的：</li>
+<li>先对候选人进行人脸检测、关键点提取、描述子生成后，把候选人描述子保存起来。</li>
+<li>然后对测试人脸进行人脸检测、关键点提取、描述子生成。</li>
+<li>最后求测试图像人脸描述子和候选人脸描述子之间的欧氏距离，距离最小者判定为同一个人。</li>
+</ul>
+<h2 id="3-代码"><a href="#3-代码" class="headerlink" title="3.代码"></a>3.代码</h2><p>代码不做过多解释，因为已经注释的非常完善了。以下是girl-face-rec.python<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"># -*- coding: UTF-8 -*-</div><div class="line">import sys,os,dlib,glob,numpy</div><div class="line">from skimage import io</div><div class="line">if len(sys.argv) != 5:</div><div class="line">    print &quot;请检查参数是否正确&quot;</div><div class="line">    exit()</div><div class="line"># 1.人脸关键点检测器</div><div class="line">predictor_path = sys.argv[1]</div><div class="line"># 2.人脸识别模型</div><div class="line">face_rec_model_path = sys.argv[2]</div><div class="line"># 3.候选人脸文件夹</div><div class="line">faces_folder_path = sys.argv[3]</div><div class="line"># 4.需识别的人脸</div><div class="line">img_path = sys.argv[4]</div><div class="line"># 1.加载正脸检测器</div><div class="line">detector = dlib.get_frontal_face_detector()</div><div class="line"># 2.加载人脸关键点检测器</div><div class="line">sp = dlib.shape_predictor(predictor_path)</div><div class="line"># 3. 加载人脸识别模型</div><div class="line">facerec = dlib.face_recognition_model_v1(face_rec_model_path)</div><div class="line"># win = dlib.image_window()</div><div class="line"># 候选人脸描述子list</div><div class="line">descriptors = []</div><div class="line"># 对文件夹下的每一个人脸进行:</div><div class="line"># 1.人脸检测</div><div class="line"># 2.关键点检测</div><div class="line"># 3.描述子提取</div><div class="line">for f in glob.glob(os.path.join(faces_folder_path, &quot;*.jpg&quot;)):</div><div class="line">    print(&quot;Processing file: &#123;&#125;&quot;.format(f))</div><div class="line">    img = io.imread(f)</div><div class="line">    #win.clear_overlay()</div><div class="line">    #win.set_image(img)</div><div class="line">    # 1.人脸检测</div><div class="line">    dets = detector(img, 1)</div><div class="line">    print(&quot;Number of faces detected: &#123;&#125;&quot;.format(len(dets)))</div><div class="line">    for k, d in enumerate(dets):  </div><div class="line">    # 2.关键点检测</div><div class="line">    shape = sp(img, d)</div><div class="line">     # 画出人脸区域和和关键点</div><div class="line">        # win.clear_overlay()</div><div class="line">        # win.add_overlay(d)</div><div class="line">        # win.add_overlay(shape)</div><div class="line">        # 3.描述子提取，128D向量</div><div class="line">        face_descriptor = facerec.compute_face_descriptor(img, shape)</div><div class="line">        # 转换为numpy array</div><div class="line">        v = numpy.array(face_descriptor)  </div><div class="line">        descriptors.append(v)</div><div class="line"># 对需识别人脸进行同样处理</div><div class="line"># 提取描述子，不再注释</div><div class="line">img = io.imread(img_path)</div><div class="line">dets = detector(img, 1)</div><div class="line">dist = []</div><div class="line">for k, d in enumerate(dets):</div><div class="line">shape = sp(img, d)</div><div class="line"> face_descriptor = facerec.compute_face_descriptor(img, shape)</div><div class="line"> d_test = numpy.array(face_descriptor) </div><div class="line">    # 计算欧式距离</div><div class="line">    for i in descriptors:</div><div class="line">        dist_ = numpy.linalg.norm(i-d_test)</div><div class="line">        dist.append(dist_)</div><div class="line"># 候选人名单</div><div class="line">candidate = [&apos;Unknown1&apos;,&apos;Unknown2&apos;,&apos;Shishi&apos;,&apos;Unknown4&apos;,&apos;Bingbing&apos;,&apos;Feifei&apos;]</div><div class="line"># 候选人和距离组成一个dict</div><div class="line">c_d = dict(zip(candidate,dist))</div><div class="line">cd_sorted = sorted(c_d.iteritems(), key=lambda d:d[1])</div><div class="line">print &quot;\n The person is: &quot;,cd_sorted[0][0]  </div><div class="line">dlib.hit_enter_to_continue()</div></pre></td></tr></table></figure></p>
+<h2 id="4-运行结果"><a href="#4-运行结果" class="headerlink" title="4.运行结果"></a>4.运行结果</h2><p>我们在.py所在的文件夹下打开命令行，运行如下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python girl-face-rec.py 1.dat 2.dat ./candidate-faecs test1.jpg</div></pre></td></tr></table></figure></p>
+<p>由于shape_predictor_68_face_landmarks.dat和dlib_face_recognition_resnet_model_v1.dat名字实在太长，所以我把它们重命名为1.dat和2.dat。<br>运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">The person is XXX。</div></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzA5MzY4NTQwMA==&amp;mid=2650996942&amp;idx=1&amp;sn=02c335aeb0a431b361bc3ca90a9f8c8f&amp;chksm=8badb339bcda3a2f4ec026c80801cde6d13525cf0e8086fdddbb296c81ca6376fee03051bb88&amp;scene=0&amp;key=cd1928819323f84574591249d8d3b9558858fe07bf89a18626fdd6898b1737bb4416db7ace18aa87a5cfccb1f8648859e19f4abbba71899999dbe650037ac3b1dd755384fcad1b5ee43178472da4e306&amp;ascene=0&amp;uin=Njc2NjQ1NjIw&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12+build(16A323)&amp;version=12010210&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=xhlLfolsnfhQZK9MMVf8vkzOlZJ8R2EHJTl74x7elmy%2FXOowWb9zd6w5UZ18WfCZ" target="_blank" rel="external">https://mp.weixin.qq.com/s?__biz=MzA5MzY4NTQwMA==&amp;mid=2650996942&amp;idx=1&amp;sn=02c335aeb0a431b361bc3ca90a9f8c8f&amp;chksm=8badb339bcda3a2f4ec026c80801cde6d13525cf0e8086fdddbb296c81ca6376fee03051bb88&amp;scene=0&amp;key=cd1928819323f84574591249d8d3b9558858fe07bf89a18626fdd6898b1737bb4416db7ace18aa87a5cfccb1f8648859e19f4abbba71899999dbe650037ac3b1dd755384fcad1b5ee43178472da4e306&amp;ascene=0&amp;uin=Njc2NjQ1NjIw&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12+build(16A323)&amp;version=12010210&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=xhlLfolsnfhQZK9MMVf8vkzOlZJ8R2EHJTl74x7elmy%2FXOowWb9zd6w5UZ18WfCZ</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://liangsi.github.io/2017/03/29/在Hexo中渲染MathJax数学公式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1007,7 +1163,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1025,7 +1181,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
