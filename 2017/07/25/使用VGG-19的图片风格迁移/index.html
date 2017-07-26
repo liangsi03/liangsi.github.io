@@ -97,7 +97,10 @@
 <meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/111.jpg">
 <meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/666.jpg">
 <meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/333.jpg">
-<meta property="og:updated_time" content="2017-07-25T02:01:13.000Z">
+<meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/222.jpg">
+<meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/1010.jpg">
+<meta property="og:image" content="https://liangsi.github.io/2017/07/25/使用VGG-19的图片风格迁移/999.jpg">
+<meta property="og:updated_time" content="2017-07-26T02:25:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用VGG-19的neural-style图片风格迁移">
 <meta name="twitter:description" content="本文的目的只是想尝试下neural-style，看看是不是能把图片加一个风格的模板，事实上改善图片风格成油画，水彩画等比较有效，但实际上改变个图片的风格，突出主题，相对比较难些。代码：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585">
@@ -362,6 +365,7 @@
 <p>直接使用的是imagenet-vgg-verydeep-19.mat模型。</p>
 <p>直接运行如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python neural_style.py --content 111.jpg --styles 222.jpg --output 333.jpg</div></pre></td></tr></table></figure></p>
 <p>content：<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/111.jpg" alt="图示"><br>styles:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/666.jpg" alt="图示"><br>output:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/333.jpg" alt="图示"></p>
+<p>然后又做了一个抽象画的风格迁移，这个的执行效率很慢，但是损失相对前一个很低：<br>content：<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/222.jpg" alt="图示"><br>styles:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/1010.jpg" alt="图示"><br>output:<br><img src="/2017/07/25/使用VGG-19的图片风格迁移/999.jpg" alt="图示"></p>
 <p>参考：<br><a href="http://www.cnblogs.com/lijingpeng/p/6084666.html" target="_blank" rel="external">http://www.cnblogs.com/lijingpeng/p/6084666.html</a><br><a href="http://blog.csdn.net/jsond/article/details/72667829" target="_blank" rel="external">http://blog.csdn.net/jsond/article/details/72667829</a><br><a href="https://github.com/lijingpeng/neural-style" target="_blank" rel="external">https://github.com/lijingpeng/neural-style</a><br><a href="http://www.cnblogs.com/pandaroll/p/6718483.html" target="_blank" rel="external">http://www.cnblogs.com/pandaroll/p/6718483.html</a><br><a href="https://github.com/anishathalye/neural-style" target="_blank" rel="external">https://github.com/anishathalye/neural-style</a></p>
 
       
